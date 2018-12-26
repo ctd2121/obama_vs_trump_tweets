@@ -1,5 +1,5 @@
 # obama_vs_trump_tweets
-Using natural language processing to compare Twitter habits of the two most recent U.S. presidents
+Using natural language processing to compare social media habits of the two most recent U.S. presidents
 
 Donald Trump tweet data from http://www.trumptwitterarchive.com/archive
 
