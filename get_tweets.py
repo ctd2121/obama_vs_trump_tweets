@@ -5,7 +5,7 @@ import csv
 # Original code from http://socialmedia-class.org/twittertutorial.html
 
 # Variables that contain user credentials to access Twitter API 
-ACCESS_TOKEN = 'YOUR ACCESS TOKEN"'
+ACCESS_TOKEN = 'YOUR ACCESS TOKEN'
 ACCESS_SECRET = 'YOUR ACCESS TOKEN SECRET'
 CONSUMER_KEY = 'YOUR API KEY'
 CONSUMER_SECRET = 'ENTER YOUR API SECRET'
@@ -14,8 +14,8 @@ auth = tweepy.auth.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
 auth.set_access_token(ACCESS_TOKEN, ACCESS_SECRET)
 
 api = tweepy.API(auth, wait_on_rate_limit=True, wait_on_rate_limit_notify=True)
-# wait_on_rate_limit= True;  will make the api to automatically wait for rate limits to replenish
-# wait_on_rate_limit_notify= Ture;  will make the api  to print a notification when Tweepy is waiting for rate limits to replenish
+# wait_on_rate_limit = True:  will make the api automatically wait for rate limits to replenish
+# wait_on_rate_limit_notify = True:   will make the api print a notification when Tweepy is waiting for rate limits to replenish
 
 # Open/create a file to which we will append data
 csvFile = open('result2.csv', 'a')
