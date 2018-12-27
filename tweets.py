@@ -22,17 +22,25 @@ additional_stop_words = ["retweet","http","twitter","com","pic","rt",
                          "amp","realdonaldtrump","ly"]
 
 def generate_topics(president_df, n_topics):
+    """
+    Computes the most frequently tweeted-about topics in a given collection of tweets
     
-    president_df = president_df.dropna(axis=0, how="any") # drop NAs
+    Args:
+        president_df: A Pandas DataFrame, the first column of which consists of tweets
+        n_topics: The number of topics that should be printed out
+    """
+    # Drop NAs
+    president_df = president_df.dropna(axis=0, how="any")
     
     # Create corpus of tweets by appending values from first column of df
     tweets = []
     for i in range(len(president_df)):
         tweets.append(president_df.iloc[i,0])
         
-    # Instantiate count vectorizer
-    # All lowercase, remove English stopwords, create 1- and 2-word n-grams
-    cv = text.CountVectorizer(lowercase=True, stop_words=text.ENGLISH_STOP_WORDS.union(additional_stop_words),
+    # Instantiate CountVectorizer, a scikit-learn object that defines how we will create our vocabulary
+    # All lowercase, remove English stop words and additional stop words, and create 1- and 2-word n-grams
+    cv = text.CountVectorizer(lowercase=True,
+                              stop_words=text.ENGLISH_STOP_WORDS.union(additional_stop_words),
                               ngram_range=(1,2))
     
     # Create term-document matrix
@@ -50,11 +58,19 @@ def generate_topics(president_df, n_topics):
     
     # Get topics and print them to screen
     features = cv.get_feature_names()
-    print_top_words(lda, features, 5)
+    print_top_words(lda, features, 8) # Print the eight top words that make up each topic (can change this number if desired)
 
 # An auxiliary function to print out the most likely terms for each topic
 # Taken from https://scikit-learn.org/stable/auto_examples/applications/plot_topics_extraction_with_nmf_lda.html
 def print_top_words(model, feature_names, n_top_words):
+    """
+    Prints out a fixed number of topics
+    
+    Args:
+        model: A Latent Dirichlet Allocation model
+        feature_names: The topics/features to be printed, as computed by the LDA model
+        n_top_words: The number of words to be printed for each topic
+    """
     for topic_idx, topic in enumerate(model.components_):
         message = "Topic {:#2d}: ".format(topic_idx+1)
         message += ", ".join([feature_names[i]
@@ -62,7 +78,7 @@ def print_top_words(model, feature_names, n_top_words):
         print(message)
 
 if __name__ == "__main__":
-    print("\nGenerating " + str(n_topics) + " topics for Barack Obama...\n")
+    print("\nTop " + str(n_topics) + " topics for Barack Obama...\n")
     generate_topics(obama, n_topics)
-    print("\nGenerating " + str(n_topics) + " topics for Donald Trump...\n")
+    print("\nTop " + str(n_topics) + " topics for Donald Trump...\n")
     generate_topics(trump, n_topics)
