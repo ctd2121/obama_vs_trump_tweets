@@ -18,7 +18,7 @@ api = tweepy.API(auth, wait_on_rate_limit=True, wait_on_rate_limit_notify=True)
 # wait_on_rate_limit_notify = True:   will make the api print a notification when Tweepy is waiting for rate limits to replenish
 
 # Open/create a file to which we will append data
-csvFile = open('result2.csv', 'a')
+csvFile = open('results.csv', 'a')
 
 # Use csv writer to save results to a CSV file
 csvWriter = csv.writer(csvFile)
@@ -29,6 +29,7 @@ for tweet in tweepy.Cursor(api.user_timeline,
                            until = "2018-12-26",
                            lang = "en").items():
     tweet_date = tweet.created_at
+    
     # Write row to CSV file
     csvWriter.writerow([tweet.created_at, tweet.text.encode('utf-8')])
     print(tweet.created_at, tweet.text)
